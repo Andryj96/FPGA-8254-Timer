@@ -45,6 +45,9 @@
 
 *.xise
 
+# Proteus
+*.pdsbak
+*.workspace
 
 # project-wide generated files
 *.gise
