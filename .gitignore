@@ -3,6 +3,7 @@
 *.bgn
 *.bit
 *.bld
+*.log
 *.cmd_log
 *.drc
 *.ll
@@ -42,12 +43,17 @@
 *_summary.xml
 *_usage.xml
 *_xst.xrpt
+*.wdb
+*.exe
+*.vhi
+*.sym
+*.spl
+*.xmsgs
+*.cmd
+*.ini
 
 *.xise
-
-# Proteus
-*.pdsbak
-*.workspace
+*test.vhd
 
 # project-wide generated files
 *.gise
@@ -62,4 +68,8 @@ xlnx_auto_0_xdb/
 xst/
 _ngo/
 _xmsgs/
+isim/
 
+# Proteus
+*.pdsbak
+*.workspace
