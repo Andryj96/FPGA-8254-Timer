@@ -20,7 +20,7 @@ entity ADDR_DATA_REG is
 	
     Port (  
            
-		  WR,CS,RST : IN STD_LOGIC;
+		  CLK,CS,RST : IN STD_LOGIC;
 		  A:IN STD_LOGIC_VECTOR (2 DOWNTO 0);
 		  DIN:IN STD_LOGIC_VECTOR (7 DOWNTO 0);
 		  AP:OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
@@ -35,10 +35,10 @@ architecture ARCH_ADDR_DATA_REG  of  ADDR_DATA_REG  is
 begin
 
 -- memoria de estados --
-process (WR, CS)
+process (CLK, CS)
 begin
 if CS = '0' then
-	if (WR'event and WR ='1') then
+	if (CLK'event and CLK ='1') then
 		if RST = '0' then 
 			DI <= (others =>'0');
 			AP <= (others =>'0');
