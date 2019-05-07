@@ -1,6 +1,20 @@
+----------------------------------------------------------------------------------
+-- MIT License
+--	Copyright (c) 2019
+-- Engineers: Andry J. Hernández Rodríguez & Dariel Suárez González 
+-- 
+-- Create Date:    22:33:33 06/05/2019 
+-- Design Name: 	 8254_Timer
+-- Module Name:    ADDR_DATA_REG 
+-- Project Name:   FPGA_8254_Timer
+-- Target Devices: Spaartan3E-XC3S1600E
+-- Tool versions:  Xilinx ISE 14.7
+-- Description: 	 Timer 8254 - 7 chanels with modes 1 and 3
+--
+
+----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use ieee.std_logic_arith.all;
 
 entity ADDR_DATA_REG is
 	
@@ -15,36 +29,26 @@ entity ADDR_DATA_REG is
 end ADDR_DATA_REG ;
 
 
-architecture ARCH_ADDR_DATA_REG  of  Count  is
-signal EP, ES: std_logic_vector (7 downto 0);
-signal EPA, ESA: std_logic_vector (2 downto 0);
+architecture ARCH_ADDR_DATA_REG  of  ADDR_DATA_REG  is
+
 
 begin
 
 -- memoria de estados --
-process (WR, reset)
+process (WR, CS)
 begin
-
- if (reset='0') then 
-    EP <= (others =>'0');
-	EPA <= (others =>'0');
- elsif (WR'event and WR ='1') then
-    EP <= ES;
-	EPA <= ESA;
- 
- end if ;
+if CS = '0' then
+	if (WR'event and WR ='1') then
+		if RST = '0' then 
+			DI <= (others =>'0');
+			AP <= (others =>'0');
+		else
+			DI <= DIN;
+			AP <= A;
+		end if;
+	end if;	
+end if;	 
 end process;
-
-
--- CLC prÃ³ximo estado 
-ES <=   EP when CS = '0' else
-        ES;
-ESA <=   EPA when CS = '0' else
-        ESA;
-
--- CLC de salida
- DI <= EP;   
- AP <= EPA;
 
 end ARCH_ADDR_DATA_REG;
 
