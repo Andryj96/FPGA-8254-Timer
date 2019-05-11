@@ -1,15 +1,15 @@
 ----------------------------------------------------------------------------------
 -- MIT License
 --	Copyright (c) 2019
--- Engineers: Andry J. Hernández Rodríguez & Dariel Suárez González 
+-- Engineers: Andry J. Hernandez Rodriguez 
 -- 
--- Create Date:    22:33:33 06/05/2019 
+-- Create Date:    22:33:33 05/06/2019 
 -- Design Name: 	 8254_Timer
 -- Module Name:    R/W_Sync
 -- Project Name:   FPGA_8254_Timer
 -- Target Devices: Spaartan3E-XC3S1600E
 -- Tool versions:  Xilinx ISE 14.7
--- Description: 	 Timer 8254 - 7 chanels with modes 1 and 3
+-- Description: 	 Sync RD and WR signals with FPGA Clock
 --
 
 ----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ end RW_CONTROL_SYNC ;
 
 architecture arch_RW_CONTROL_SYNC  of  RW_CONTROL_SYNC  is
 
-	COMPONENT failing_edge_detector
+	COMPONENT falling_edge_detector
 	PORT(
 		clk : IN std_logic;
 		rst : IN std_logic;
@@ -43,14 +43,14 @@ architecture arch_RW_CONTROL_SYNC  of  RW_CONTROL_SYNC  is
 	
 begin
 	
-		Inst_failing_edge_detector_WR: failing_edge_detector PORT MAP(
+		Inst_falling_edge_detector_WR: falling_edge_detector PORT MAP(
 		clk => CLK,
 		rst => RST,
 		cs => CS,
 		start => WR,
 		pulse => WRITES
 	);
-		Inst_failing_edge_detector_RD: failing_edge_detector PORT MAP(
+		Inst_falling_edge_detector_RD: falling_edge_detector PORT MAP(
 		clk => CLK,
 		rst => RST,
 		cs => CS,
