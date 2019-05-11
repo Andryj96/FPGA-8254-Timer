@@ -1,0 +1,17 @@
+# Output products list for <CUNTER_DOWN_B_16>
+CUNTER_DOWN_B_16.asy
+CUNTER_DOWN_B_16.gise
+CUNTER_DOWN_B_16.ngc
+CUNTER_DOWN_B_16.sym
+CUNTER_DOWN_B_16.vhd
+CUNTER_DOWN_B_16.vho
+CUNTER_DOWN_B_16.xco
+CUNTER_DOWN_B_16.xise
+CUNTER_DOWN_B_16\doc\c_counter_binary_v11_0_readme.txt
+CUNTER_DOWN_B_16\doc\c_counter_binary_v11_0_vinfo.html
+CUNTER_DOWN_B_16\doc\ds215_counter.pdf
+CUNTER_DOWN_B_16_flist.txt
+CUNTER_DOWN_B_16_xmdf.tcl
+_xmsgs\pn_parser.xmsgs
+core_resources.txt
+gui_latency.txt
