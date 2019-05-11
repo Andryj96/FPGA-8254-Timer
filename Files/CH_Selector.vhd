@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 -- MIT License
 --	Copyright (c) 2019
--- Engineers: Andry J. Hernández Rodríguez & Dariel Suárez González 
+-- Engineers: Andry J. Hernandez Rodriguez
 -- 
 -- Create Date:    17:58:33 05/05/2019 
 -- Design Name: 	 CH_Selector
