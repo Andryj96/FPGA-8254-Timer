@@ -20,7 +20,6 @@ entity GEN_REGISTER is
 	Generic (lenght: integer := 8 );
     Port ( D : in  STD_LOGIC_VECTOR (lenght-1 downto 0);
            RST : in  STD_LOGIC;
-           CE : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            EN : in  STD_LOGIC;
            Q : out  STD_LOGIC_VECTOR (lenght-1 downto 0));
@@ -31,17 +30,15 @@ architecture Behavioral of GEN_REGISTER is
 signal curr_val, next_val : STD_LOGIC_VECTOR (lenght-1 downto 0);
 begin
 
-	process(CLK, CE)
+	process(CLK)
 	begin
-		if CE = '0' then
-			if rising_edge(CLK) then
-				if RST = '0' then
-					curr_val <= (others => '0');
-				else
-					curr_val <= next_val;
-				end if;
+		if rising_edge(CLK) then
+			if RST = '0' then
+				curr_val <= (others => '0');
+			else
+				curr_val <= next_val;
 			end if;
-		end if;	
+		end if;
 	end process;
 	
 	process(EN, curr_val, D)
