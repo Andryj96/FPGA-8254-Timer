@@ -32,15 +32,13 @@ begin
 
 	process(clk, cs)
 		begin
-			if cs = '0' then
-				if rising_edge(clk) then
-					if (rst = '0') then
-						Q1 <= '1';
-						Q2 <= '1';
-					else
-						Q1 <= start;
-						Q2 <= Q1;
-					end if;
+			if rising_edge(clk) then
+				if (rst = '0') then
+					Q1 <= '1';
+					Q2 <= '1';
+				elsif cs = '0' then
+					Q1 <= start;
+					Q2 <= Q1;
 				end if;
 			end if;
 		end process;

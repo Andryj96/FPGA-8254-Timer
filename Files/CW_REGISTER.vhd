@@ -17,7 +17,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity CW_REGISTER is
-    Port ( D : in  STD_LOGIC_VECTOR (7 downto 0);
+    Port ( D : in  STD_LOGIC_VECTOR (2 downto 0);
            EN : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            RST : in  STD_LOGIC;
@@ -27,7 +27,7 @@ end CW_REGISTER;
 
 architecture Behavioral of CW_REGISTER is
 
-signal data_c, data_n: std_logic_vector (7 downto 0);
+signal data_c, data_n: std_logic_vector (2 downto 0);
 
 begin
 
@@ -53,7 +53,7 @@ begin
 		end if;
 	end process;
 		
-		A <= data_c(2) & data_c(3) & data_c(4);
+		A <= data_c;
 	
 end Behavioral;
 
