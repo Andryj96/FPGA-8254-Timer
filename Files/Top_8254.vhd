@@ -38,6 +38,8 @@ architecture Behavioral of Top_8254 is
 		CLK : IN std_logic;
 		CS : IN std_logic;
 		RST : IN std_logic;
+		RD : IN std_logic;
+		WR : IN std_logic;
 		A : IN std_logic_vector(2 downto 0);
 		DIN : IN std_logic_vector(7 downto 0);          
 		AP : OUT std_logic_vector(2 downto 0);
@@ -68,9 +70,34 @@ architecture Behavioral of Top_8254 is
 		);
 	END COMPONENT;
 	
+	COMPONENT CW_REGISTER
+	PORT(
+		D : IN std_logic_vector(2 downto 0);
+		EN : IN std_logic;
+		CLK : IN std_logic;
+		RST : IN std_logic;          
+		WCTRL : OUT std_logic;
+		A : OUT std_logic_vector(2 downto 0)
+		);
+	END COMPONENT;
+	
+	COMPONENT CHANNEL
+	PORT(
+		D : IN std_logic_vector(7 downto 0);
+		RD : IN std_logic;
+		WR : IN std_logic;
+		RST : IN std_logic;
+		CLK : IN std_logic;
+		CS : IN std_logic;
+		GATE : IN std_logic;
+		CLKA : IN std_logic;          
+		TOUT : OUT std_logic;
+		DO : OUT std_logic_vector(7 downto 0)
+		);
+	END COMPONENT;
 	
 	SIGNAL ADDRP,WADDR : std_logic_vector(2 downto 0);
-	SIGNAL SELADDR, WRITES, READS : std_logic;
+	SIGNAL WRITES, READS, WCW : std_logic;
 	SIGNAL CHANELS, DATAP: std_logic_vector(7 downto 0);
 	
 begin
@@ -79,10 +106,13 @@ begin
 		CLK => WR,
 		CS => CS,
 		RST => RST,
+		RD => RD,
+		WR => WR,
 		A => ADDR,
 		DIN => Din,
 		AP => ADDRP,
 		DI => DATAP
+
 	);
 	
 	Inst_RW_CONTROL_SYNC: RW_CONTROL_SYNC PORT MAP(
@@ -100,9 +130,109 @@ begin
 		RST => RST,
 		A => ADDRP,
 		B => WADDR,
-		SEL => SELADDR,
+		SEL => WCW,
 		Y => CHANELS
 	);
 
+	Inst_CW_REGISTER: CW_REGISTER PORT MAP(
+		D => DATAP(4 downto 2),
+		EN => CHANELS(7),
+		CLK => CLK,
+		RST => RST,
+		WCTRL => WCW,
+		A => WADDR
+	);
+	
+	Inst_CHANNEL0: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(0),
+		GATE => GATE_CH(0),
+		CLKA => CLK_CH(0),
+		TOUT => OUT_CH(0),
+		DO => Do
+	);
+	
+	Inst_CHANNEL1: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(1),
+		GATE => GATE_CH(1),
+		CLKA => CLK_CH(1),
+		TOUT => OUT_CH(1),
+		DO => Do
+	);
+	
+	Inst_CHANNEL2: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(2),
+		GATE => GATE_CH(2),
+		CLKA => CLK_CH(2),
+		TOUT => OUT_CH(2),
+		DO => Do
+	);
+	
+	Inst_CHANNEL3: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(3),
+		GATE => GATE_CH(3),
+		CLKA => CLK_CH(3),
+		TOUT => OUT_CH(3),
+		DO => Do
+	);
+	
+	Inst_CHANNEL4: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(4),
+		GATE => GATE_CH(4),
+		CLKA => CLK_CH(4),
+		TOUT => OUT_CH(4),
+		DO => Do
+	);
+	
+	Inst_CHANNEL5: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(5),
+		GATE => GATE_CH(5),
+		CLKA => CLK_CH(5),
+		TOUT => OUT_CH(5),
+		DO => Do
+	);
+	
+	Inst_CHANNEL6: CHANNEL PORT MAP(
+		D => DATAP,
+		RD => READS,
+		WR => WRITES,
+		RST => RST,
+		CLK => CLK,
+		CS => CHANELS(6),
+		GATE => GATE_CH(6),
+		CLKA => CLK_CH(6),
+		TOUT => OUT_CH(6),
+		DO => Do
+	);
+	
 end Behavioral;
 
