@@ -73,20 +73,20 @@ architecture Behavioral of CHANNEL is
 		Q : OUT std_logic_vector(7 downto 0)
 		);
 	END COMPONENT;
-	
-	COMPONENT COUNTER_16b_W_Modes
-	PORT(
-		CLK : IN std_logic;
-		EN : IN std_logic;
-		RST : IN std_logic;
-		LOAD : IN std_logic;
-		MODE : IN std_logic;
-		D : IN std_logic_vector(15 downto 0);          
-		RCO : OUT std_logic;
-		Q : OUT std_logic_vector(15 downto 0)
-		);
-	END COMPONENT;
-	
+ 
+    COMPONENT COUNTER_16b_W_Modes
+    PORT(
+         CLK : IN  std_logic;
+         EN : IN  std_logic;
+         RST : IN  std_logic;
+         LOAD : IN  std_logic;
+         MODE : IN  std_logic;
+         D : IN  std_logic_vector(15 downto 0);
+         RCO : OUT  std_logic;
+         Q : OUT  std_logic_vector(15 downto 0)
+        );
+    END COMPONENT;
+	 
 	COMPONENT OUT_DATA_REG_WHZ
 	PORT(
 		CLK : IN std_logic;

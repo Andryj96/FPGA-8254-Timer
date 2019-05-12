@@ -47,7 +47,7 @@ END COMPONENT;
 
 begin
 	
-	Inst_CUNTER_DOWN_B_16 : CUNTER_DOWN_B_16
+	Inst_COUNTER_DOWN_B_16 : CUNTER_DOWN_B_16
 	  PORT MAP (
 		 clk => CLK,
 		 ce => EN,

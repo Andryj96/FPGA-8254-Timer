@@ -18,11 +18,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity RW_CONTROL_SYNC is
 	
-    Port (  
-           
-			RD,WR,CS,CLK,RST : IN STD_LOGIC;
-		   WRITES : OUT STD_LOGIC;
-         READS : OUT  STD_LOGIC);
+    Port (
+		RD,WR,CS,CLK,RST : IN STD_LOGIC;
+		WRITES : OUT STD_LOGIC;
+		READS : OUT  STD_LOGIC);
 		   
 end RW_CONTROL_SYNC ;
 
@@ -38,8 +37,6 @@ architecture arch_RW_CONTROL_SYNC  of  RW_CONTROL_SYNC  is
 		pulse : OUT std_logic
 		);
 	END COMPONENT;
-	
-	SIGNAL W,R: std_logic;
 	
 begin
 	

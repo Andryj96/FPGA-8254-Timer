@@ -50,7 +50,7 @@ begin
 		Q => qout
 	);
 	
-	process(CS)
+	process(CS, qout)
 	begin
 		if CS = '0' then
 			Q <= qout;
