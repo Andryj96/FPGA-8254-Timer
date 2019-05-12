@@ -38,17 +38,15 @@ begin
 	
 	process(CLK,CS)
 	begin
-		if CS = '0' then
-			if rising_edge(CLK) then
-				if RST = '0' then
-					state <= ST0;
-					mode <= '0';
-				else
-					state <= next_state;
-					mode <= n_mode;
-				end if;
+		if rising_edge(CLK) then
+			if RST = '0' then
+				state <= ST0;
+				mode <= '0';
+			elsif CS = '0' then
+				state <= next_state;
+				mode <= n_mode;
 			end if;
-		end if;	
+		end if;
 	end process;
 	
 	NEXT_STATE_LOGIC: process(state, EN, D, mode)
@@ -59,10 +57,10 @@ begin
 			when ST0 => 
 				if EN = '1' and D(1) = '0' then 
 					next_state <= ST1;
+					n_mode <= D(0);
 				end if;
 			when ST1 =>
 				if EN = '1' then
-					n_mode <= D(0);
 					if D(1) = '0' then
 						next_state <= ST2;
 					else

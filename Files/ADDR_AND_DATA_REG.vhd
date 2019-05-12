@@ -29,14 +29,13 @@ entity ADDR_DATA_REG is
 
 end ADDR_DATA_REG;
 
-architecture ARCH_ADDR_DATA_REG  of  ADDR_DATA_REG  is
+architecture Behavioral  of  ADDR_DATA_REG  is
 
 	COMPONENT GEN_REGISTER
 	Generic (lenght: integer);
 	PORT(
 		D : IN std_logic_vector(lenght-1 downto 0);
 		RST : IN std_logic;
-		CE : IN std_logic;
 		CLK : IN std_logic;
 		EN : IN std_logic;          
 		Q : OUT std_logic_vector(lenght-1 downto 0)
@@ -53,7 +52,6 @@ begin
 	PORT MAP(
 		D => DIN,
 		RST => RST,
-		CE => CS,
 		CLK => CLK,
 		EN => en_data,
 		Q => DI
@@ -65,18 +63,17 @@ begin
 	PORT MAP(
 		D => A,
 		RST => RST,
-		CE => CS,
 		CLK => CLK,
 		EN => en_addr,
 		Q => AP
 	);
 
-	process(RD,WR)
+	process(RD, WR, CS)
 	begin
-		if WR = '0' then
+		if WR = '0' and CS = '0' then
 			en_addr <= '1';
 			en_data <= '1';
-		elsif RD = '0' then
+		elsif RD = '0' and CS = '0' then
 			en_addr <= '1';
 			en_data <= '0';
 		else
@@ -85,6 +82,6 @@ begin
 		end if;
 	end process;
 
-end ARCH_ADDR_DATA_REG;
+end Behavioral;
 
 
