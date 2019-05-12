@@ -25,36 +25,34 @@
 --    (c) Copyright 1995-2019 Xilinx, Inc.                                    --
 --    All rights reserved.                                                    --
 --------------------------------------------------------------------------------
+
 --------------------------------------------------------------------------------
--- You must compile the wrapper file CUNTER_DOWN_B_16.vhd when simulating
--- the core, CUNTER_DOWN_B_16. When compiling the wrapper file, be sure to
--- reference the XilinxCoreLib VHDL simulation library. For detailed
--- instructions, please refer to the "CORE Generator Help".
+--    Generated from core with identifier:                                    --
+--    xilinx.com:ip:c_counter_binary:11.0                                     --
+--                                                                            --
+--    The Xilinx LogiCORE Binary Counter creates up counters, down            --
+--    counters, and up/down counters with output widths ranging up to 256     --
+--    bits.  The upper count limit is user programmable, and the counter's    --
+--    increment value can either be user-defined, or specified via an         --
+--    external input port.                                                    --
+--------------------------------------------------------------------------------
 
--- The synthesis directives "translate_off/translate_on" specified
--- below are supported by Xilinx, Mentor Graphics and Synplicity
--- synthesis tools. Ensure they are correct for your synthesis tool(s).
+-- Interfaces:
+--    sset_intf
+--    clk_intf
+--    sclr_intf
+--    ce_intf
+--    sinit_intf
+--    up_intf
+--    load_intf
+--    l_intf
+--    thresh0_intf
+--    q_intf
 
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
--- synthesis translate_off
-LIBRARY XilinxCoreLib;
--- synthesis translate_on
-ENTITY CUNTER_DOWN_B_16 IS
-  PORT (
-    clk : IN STD_LOGIC;
-    ce : IN STD_LOGIC;
-    sclr : IN STD_LOGIC;
-    load : IN STD_LOGIC;
-    l : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    thresh0 : OUT STD_LOGIC;
-    q : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
-  );
-END CUNTER_DOWN_B_16;
+-- The following code must appear in the VHDL architecture header:
 
-ARCHITECTURE CUNTER_DOWN_B_16_a OF CUNTER_DOWN_B_16 IS
--- synthesis translate_off
-COMPONENT wrapped_CUNTER_DOWN_B_16
+------------- Begin Cut here for COMPONENT Declaration ------ COMP_TAG
+COMPONENT CUNTER_DOWN_B_16
   PORT (
     clk : IN STD_LOGIC;
     ce : IN STD_LOGIC;
@@ -65,37 +63,13 @@ COMPONENT wrapped_CUNTER_DOWN_B_16
     q : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
   );
 END COMPONENT;
+-- COMP_TAG_END ------ End COMPONENT Declaration ------------
 
--- Configuration specification
-  FOR ALL : wrapped_CUNTER_DOWN_B_16 USE ENTITY XilinxCoreLib.c_counter_binary_v11_0(behavioral)
-    GENERIC MAP (
-      c_ainit_val => "0",
-      c_ce_overrides_sync => 0,
-      c_count_by => "1",
-      c_count_mode => 1,
-      c_count_to => "1",
-      c_fb_latency => 0,
-      c_has_ce => 1,
-      c_has_load => 1,
-      c_has_sclr => 1,
-      c_has_sinit => 0,
-      c_has_sset => 0,
-      c_has_thresh0 => 1,
-      c_implementation => 0,
-      c_latency => 1,
-      c_load_low => 0,
-      c_restrict_count => 0,
-      c_sclr_overrides_sset => 1,
-      c_sinit_val => "0",
-      c_thresh0_value => "0",
-      c_verbosity => 0,
-      c_width => 16,
-      c_xdevicefamily => "spartan3e"
-    );
--- synthesis translate_on
-BEGIN
--- synthesis translate_off
-U0 : wrapped_CUNTER_DOWN_B_16
+-- The following code must appear in the VHDL architecture
+-- body. Substitute your own instance name and net names.
+
+------------- Begin Cut here for INSTANTIATION Template ----- INST_TAG
+your_instance_name : CUNTER_DOWN_B_16
   PORT MAP (
     clk => clk,
     ce => ce,
@@ -105,6 +79,10 @@ U0 : wrapped_CUNTER_DOWN_B_16
     thresh0 => thresh0,
     q => q
   );
--- synthesis translate_on
+-- INST_TAG_END ------ End INSTANTIATION Template ------------
 
-END CUNTER_DOWN_B_16_a;
+-- You must compile the wrapper file CUNTER_DOWN_B_16.vhd when simulating
+-- the core, CUNTER_DOWN_B_16. When compiling the wrapper file, be sure to
+-- reference the XilinxCoreLib VHDL simulation library. For detailed
+-- instructions, please refer to the "CORE Generator Help".
+

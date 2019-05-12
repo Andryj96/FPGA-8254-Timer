@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 14.7
-# Date: Wed May 08 02:19:33 2019
+# Date: Sun May 12 04:24:12 2019
 #
 ##############################################################
 #
@@ -58,7 +58,7 @@ CSET sclr=true
 CSET sinit=false
 CSET sinit_value=0
 CSET sset=false
-CSET sync_ce_priority=CE_Overrides_Sync
+CSET sync_ce_priority=Sync_Overrides_CE
 CSET sync_threshold_output=true
 CSET syncctrlpriority=Reset_Overrides_Set
 CSET threshold_value=0
@@ -67,4 +67,4 @@ CSET threshold_value=0
 MISC pkg_timestamp=2013-07-22T10:37:35Z
 # END Extra information
 GENERATE
-# CRC:   675fa4
+# CRC: 226b6005
