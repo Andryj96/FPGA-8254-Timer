@@ -86,6 +86,7 @@ architecture Behavioral of Top_8254 is
 		D : IN std_logic_vector(7 downto 0);
 		RD : IN std_logic;
 		WR : IN std_logic;
+		WCTRL : IN std_logic;
 		RST : IN std_logic;
 		CLK : IN std_logic;
 		CS : IN std_logic;
@@ -147,6 +148,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(0),
@@ -160,6 +162,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(1),
@@ -173,6 +176,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(2),
@@ -186,6 +190,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(3),
@@ -199,6 +204,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(4),
@@ -212,6 +218,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(5),
@@ -225,6 +232,7 @@ begin
 		D => DATAP,
 		RD => READS,
 		WR => WRITES,
+		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
 		CS => CHANELS(6),

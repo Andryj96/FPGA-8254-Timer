@@ -20,6 +20,7 @@ entity CHANNEL is
     Port ( D : in  STD_LOGIC_VECTOR (7 downto 0);
            RD : in  STD_LOGIC;
            WR : in  STD_LOGIC;
+           WCTRL : in  STD_LOGIC;
            RST : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            CS : in  STD_LOGIC;
