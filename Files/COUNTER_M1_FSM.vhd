@@ -35,7 +35,7 @@ architecture Behavioral of COUNTER_M1_FSM is
 	
 begin
 	
-	process(CLK,Mode)
+	process(CLK,CS)
 	begin
 		if rising_edge(CLK) then
 			if RST = '0' then

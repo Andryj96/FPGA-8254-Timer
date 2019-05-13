@@ -82,7 +82,7 @@ architecture Behavioral of CHANNEL is
          LOAD : IN  std_logic;
          MODE : IN  std_logic;
          D : IN  std_logic_vector(15 downto 0);
-         RCO : OUT  std_logic;
+         TOUT : OUT  std_logic;
          Q : OUT  std_logic_vector(15 downto 0)
         );
     END COMPONENT;
@@ -155,7 +155,7 @@ begin
 		MODE => mode,
 		D(7 downto 0) => in_lsb,
 		D(15 downto 8) => in_msb,
-		RCO => TOUT,
+		TOUT => TOUT,
 		Q(7 downto 0) => out_lsb,
 		Q(15 downto 8) => out_msb
 	);

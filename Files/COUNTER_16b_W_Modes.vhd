@@ -25,7 +25,7 @@ entity COUNTER_16b_W_Modes is
 		 LOAD : IN STD_LOGIC;
 		 MODE : IN STD_LOGIC;
 		 D : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-		 RCO : OUT STD_LOGIC;
+		 TOUT : OUT STD_LOGIC;
 		 Q : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	  );
 	  
@@ -43,20 +43,103 @@ architecture Behavioral of COUNTER_16b_W_Modes is
 		 thresh0 : OUT STD_LOGIC;
 		 q : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	  );
-END COMPONENT;
+	END COMPONENT;
 
+	COMPONENT COUNTER_M1_FSM
+	PORT(
+		CLK : IN std_logic;
+		RST : IN std_logic;
+		thresh0 : IN std_logic;
+		gate : IN std_logic;
+		CS : IN std_logic;          
+		ce : OUT std_logic;
+		TOUT : OUT std_logic;
+		load : OUT std_logic
+		);
+	END COMPONENT;
+
+	COMPONENT COUNTER_M3_FSM
+	PORT(
+		CLK : IN std_logic;
+		RST : IN std_logic;
+		thresh0 : IN std_logic;
+		CS : IN std_logic;
+		gate : IN std_logic;
+		D : IN std_logic_vector(15 downto 0);
+		Q : IN std_logic_vector(15 downto 0);          
+		ce : OUT std_logic;
+		load : OUT std_logic;
+		TOUT : OUT std_logic
+		);
+	END COMPONENT;
+	
+	signal end_cnt, en_M1, en_M3, ce, ce1, ce3 : std_logic;
+	signal lod, load1, load3, out_1, out_3: std_logic;
+	signal qout : std_logic_vector(15 downto 0);
+	
 begin
 	
 	Inst_COUNTER_DOWN_B_16 : CUNTER_DOWN_B_16
 	  PORT MAP (
 		 clk => CLK,
-		 ce => EN,
+		 ce => ce,
 		 sclr => RST,
-		 load => LOAD,
-		 thresh0 => RCO,
+		 load => lod,
+		 thresh0 => end_cnt,
 		 l => D,
-		 q => Q
+		 q => qout
 	  );
 
+	Inst_COUNTER_M1_FSM: COUNTER_M1_FSM PORT MAP(
+		CLK => CLK,
+		RST => RST,
+		thresh0 => end_cnt,
+		gate => EN,
+		CS => en_M1,
+		ce => ce1,
+		TOUT => out_1,
+		load => load1
+	);
+	
+	Inst_COUNTER_M3_FSM: COUNTER_M3_FSM PORT MAP(
+		CLK => CLK,
+		RST => RST,
+		thresh0 => end_cnt,
+		CS => en_M3,
+		gate => EN,
+		ce => ce3,
+		load => load3,
+		TOUT => out_3,
+		D => D,
+		Q => qout
+	);
+	
+	process(LOAD, MODE, load1, load3, ce1, ce3, out_1, out_3)
+	begin
+		if LOAD = '1' then	--TIMER Configured
+			if MODE = '0' then
+				lod <= load1;
+				ce <= ce1;
+				TOUT <= out_1;
+				en_M1 <= '0';
+				en_M3 <= '1';
+			else
+				lod <= load3;
+				ce <= ce3;
+				TOUT <= out_3;
+				en_M1 <= '1';
+				en_M3 <= '0';
+			end if;
+		else
+				lod <= '0';
+				ce <= '0';
+				TOUT <= '0';
+				en_M1 <= '1';
+				en_M3 <= '1';
+		end if;
+	end process;
+	
+	Q <= qout;
+	
 end Behavioral;
 
