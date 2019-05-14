@@ -47,18 +47,17 @@ architecture Behavioral of CHANNEL is
 	
 	COMPONENT TIMER_CONTROL
 	PORT(
-		RDY : IN std_logic;
+		CE : IN std_logic;
 		WR : IN std_logic;
 		RD : IN std_logic;
 		RW : IN std_logic;
-		CS : IN std_logic;
 		CLK : IN std_logic;
 		RST : IN std_logic;          
 		LD0 : OUT std_logic;
 		LD1 : OUT std_logic;
 		LD2 : OUT std_logic;
-		OL0 : OUT std_logic;
-		OL1 : OUT std_logic;
+		OE0 : OUT std_logic;
+		OE1 : OUT std_logic;
 		RD0 : OUT std_logic;
 		RD1 : OUT std_logic
 		);
@@ -98,7 +97,7 @@ architecture Behavioral of CHANNEL is
 		);
 	END COMPONENT;
 	
-	signal mode, ready, rw, ld0, ld1, ld2, ol0, ol1, rd0, rd1 : std_logic;
+	signal mode, ready, rw, ld0, ld1, ld2, oe0, oe1, rd0, rd1 : std_logic;
 	signal in_lsb, in_msb, out_lsb, out_msb : std_logic_vector(7 downto 0);
 
 begin
@@ -115,18 +114,17 @@ begin
 	);
 	
 	Inst_TIMER_CONTROL: TIMER_CONTROL PORT MAP(
-		RDY => ready,
 		WR => WR,
 		RD => RD,
 		RW => rw,
-		CS => CS,
+		CE => ready,
 		CLK => CLK,
 		RST => RST,
 		LD0 => ld0,
 		LD1 => ld1,
 		LD2 => ld2,
-		OL0 => ol0,
-		OL1 => ol1,
+		OE0 => oe0,
+		OE1 => oe1,
 		RD0 => rd0,
 		RD1 => rd1 
 	);	
@@ -163,8 +161,8 @@ begin
 	Inst_LSB_OUT_WHZ: OUT_DATA_REG_WHZ PORT MAP(
 		CLK => CLK,
 		RST => RST,
-		EN => ol0,
-		CS => rd0,
+		EN => rd0,
+		CS => oe0,
 		D => out_lsb,
 		Q => DO
 	);
@@ -172,8 +170,8 @@ begin
 	Inst_MSB_OUT_WHZ: OUT_DATA_REG_WHZ PORT MAP(
 		CLK => CLK,
 		RST => RST,
-		EN => ol1,
-		CS => rd1,
+		EN => rd1,
+		CS => oe1,
 		D => out_msb,
 		Q => DO
 	);

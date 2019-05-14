@@ -76,9 +76,7 @@ begin
 					end if;
 				end if;
 			when ST3 =>
-				if EN = '1' then
-					next_state <= ST1;
-				end if; 
+				next_state <= ST1;
 			when others => 
 				next_state <= state;
 			end case;
@@ -86,17 +84,15 @@ begin
 	
 	OUPUT_LOGIC: process(state, mode)
 	begin
+	RW <= '0';
 		case(state) is
 			when ST0 =>
-				RW <= '0';
 				M <= '0';
 				RDY <= '0';
 			when ST1 =>
-				RW <= '0';
 				M <= mode;
 				RDY <= '1';
 			when ST2 => 
-				RW <= '0';
 				M <= mode;
 				RDY <= '1';
 			when ST3 => 
@@ -104,7 +100,6 @@ begin
 				M <= mode;
 				RDY <= '1';
 			when others =>
-				RW <= '0';
 				M <= '0';
 				RDY <= '0';
 			end case;

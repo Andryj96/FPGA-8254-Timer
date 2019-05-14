@@ -3,101 +3,98 @@
 --	Copyright (c) 2019
 -- Engineers: Andry J. Hernandez Rodriguez
 -- 
--- Create Date:    16:47:32 05/12/2019 
+-- Create Date:    20:50:41 05/13/2019 
 -- Design Name: 	 8254_Timer
--- Module Name:    COUNTER_M1_FSM 
+-- Module Name:    LD_DATA_FSM
 -- Project Name:   FPGA_8254_Timer
 -- Target Devices: Spaartan3E-XC3S1600E
 -- Tool versions:  Xilinx ISE 14.7
--- Description: 	 State Machine for Mode 1 Timer Control
+-- Description: 	 State Machine for control count's data load
 --
 
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity COUNTER_M1_FSM is
+entity LD_DATA_FSM is
     Port ( CLK : in  STD_LOGIC;
            RST : in  STD_LOGIC;
-           thresh0 : in  STD_LOGIC;
-           gate : in  STD_LOGIC;
-           CS : in  STD_LOGIC;
-           ce : out  STD_LOGIC;
-           TOUT : out  STD_LOGIC;
-           load : out  STD_LOGIC);
-end COUNTER_M1_FSM;
+           WR : in  STD_LOGIC;
+           CE : in  STD_LOGIC;
+           LD0 : out  STD_LOGIC;
+           LD1 : out  STD_LOGIC;
+           LD2 : out  STD_LOGIC);
+end LD_DATA_FSM;
 
-architecture Behavioral of COUNTER_M1_FSM is
+architecture Behavioral of LD_DATA_FSM is
 
-	type stetes is (ST0, ST1, ST2, ST3);
+type states is (ST0, ST1, ST2, ST3);
 
-	signal state, next_state : stetes;
-	
+signal load, n_load : std_logic;
+signal state, next_state : states;
+
 begin
-	
-	process(CLK,CS)
+
+process(CLK,CE)
 	begin
 		if rising_edge(CLK) then
 			if RST = '0' then
 				state <= ST0;
-			elsif CS = '0' then
+				load <= '0';
+			elsif CE = '1' then
 				state <= next_state;
+				load <= n_load;
 			end if;
 		end if;
 	end process;
 	
-	NEXT_STATE_LOGIC: process(state, gate, thresh0)
+	NEXT_STATE_LOGIC: process(state, WR, load)
 	begin
 		next_state <= state;
+		n_load <= load;
 		case(state) is
 			when ST0 => 
-				if gate = '1' then 
+				if WR = '0' then 
 					next_state <= ST1;
 				end if;
 			when ST1 =>
-				if gate = '0' then 
+				if WR = '1' then
 					next_state <= ST2;
 				end if;
 			when ST2 =>
-				if gate = '1' then
-					next_state <= ST1;
-				elsif thresh0 = '1' then
+				if WR = '0' then
 					next_state <= ST3;
 				end if;
 			when ST3 =>
-				if gate = '1' then
-					next_state <= ST1;
-				end if;
+				next_state <= ST0;
+				n_load <= '1';
 			when others => 
 				next_state <= state;
+
 			end case;
 	end process;	
 	
-	OUPUT_LOGIC: process(state)
+	OUPUT_LOGIC: process(state, load)
 	begin
+		LD2 <= load;
 		case(state) is
 			when ST0 =>
-				load <= '0';
-				ce <= '0';
-				TOUT <= '1';
+				LD0 <= '0';
+				LD1 <= '0';
 			when ST1 =>
-				load <= '1';
-				ce <= '1';
-				TOUT <= '1';
+				LD0 <= '1';
+				LD1 <= '0';
 			when ST2 => 
-				load <= '0';
-				ce <= '1';
-				TOUT <= '0';
+				LD0 <= '0';
+				LD1 <= '0';
 			when ST3 => 
-				load <= '0';
-				ce <= '1';
-				TOUT <= '1';
+				LD0 <= '0';
+				LD1 <= '1';
 			when others =>
-				load <= '0';
-				ce <= '0';
-				TOUT <= '1';
+				LD0 <= '0';
+				LD1 <= '0';
 			end case;
 	end process;
-
+	
 end Behavioral;
 
