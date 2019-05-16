@@ -52,7 +52,6 @@
 *.cmd
 *.ini
 
-*.xise
 *test.vhd
 
 # project-wide generated files
