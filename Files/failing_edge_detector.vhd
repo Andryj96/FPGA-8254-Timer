@@ -25,29 +25,57 @@ entity falling_edge_detector is
 end falling_edge_detector;
 
 architecture Behavioral of falling_edge_detector is
-
-		signal Q1, Q2 : std_logic;
-
+	
+	type stetes is (ST0, ST1, ST2, ST3);
+	
+	signal state, next_state : stetes;
+	
 begin
-
-	process(clk, cs)
-		begin
-			if rising_edge(clk) then
-				if (rst = '0') then
-					Q1 <= '1';
-					Q2 <= '1';
-				elsif cs = '0' then
-					Q1 <= start;
-					Q2 <= Q1;
-				end if;
+	
+	process(CLK,CS)
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' then
+				state <= ST0;
+			elsif CS = '0' then
+				state <= next_state;
 			end if;
-		end process;
-		 
-	process(Q1, Q2)
-		begin
-			pulse <= Q1 or (not Q2);	
-		end process;		
-		
-end Behavioral;
+		end if;
+	end process;
+	
+	NEXT_STATE_LOGIC: process(state, start)
+	begin
+		next_state <= state;
+		case(state) is
+			when ST0 => 
+				if start = '0' then 
+					next_state <= ST1;
+				end if;
+			when ST1 =>
+						next_state <= ST2;
+			when ST2 =>
+						next_state <= ST3;
+			when ST3 =>
+						next_state <= ST0;
 
+			when others => 
+				next_state <= state;
+			end case;
+	end process;	
+	
+	OUPUT_LOGIC: process(state)
+	begin
+				pulse <= '1';
+				case(state) is
+			when ST0 =>
+			when ST1 =>
+			when ST2 =>
+				pulse <= '0';
+			when ST3 =>
+				pulse <= '0';
+			when others =>
+				pulse <= '1';
+			end case;
+	end process;
+end Behavioral;
 
