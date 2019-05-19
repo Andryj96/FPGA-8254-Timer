@@ -29,7 +29,7 @@ end CW_REG_CH;
 
 architecture Behavioral of CW_REG_CH is	
 	
-	type stetes is (ST0, ST1, ST2, ST3);
+	type stetes is (ST0, ST1, ST2, ST3, ST4);
 	
 	signal state, next_state : stetes;
 	signal mode, n_mode : std_logic;
@@ -76,6 +76,8 @@ begin
 					end if;
 				end if;
 			when ST3 =>
+				next_state <= ST4;
+			when ST4 =>
 				next_state <= ST1;
 			when others => 
 				next_state <= state;
@@ -96,6 +98,10 @@ begin
 				M <= mode;
 				RDY <= '1';
 			when ST3 => 
+				RW <= '1';
+				M <= mode;
+				RDY <= '1';
+			when ST4 => 
 				RW <= '1';
 				M <= mode;
 				RDY <= '1';

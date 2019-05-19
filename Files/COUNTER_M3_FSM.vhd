@@ -78,7 +78,7 @@ begin
 		case(state) is
 			when ST0 =>
 				load <= '1';
-				ce <= '0';
+				ce <= '1';
 			when ST1 =>
 				load <= '0';
 				ce <= '1';
@@ -87,7 +87,7 @@ begin
 				ce <= '0';
 			when others =>
 				load <= '1';
-				ce <= '0';
+				ce <= '1';
 		end case;
 		
 		if gate = '1' then
