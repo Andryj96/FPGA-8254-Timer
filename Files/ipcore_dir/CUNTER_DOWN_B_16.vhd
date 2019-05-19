@@ -87,7 +87,7 @@ END COMPONENT;
       c_restrict_count => 0,
       c_sclr_overrides_sset => 1,
       c_sinit_val => "0",
-      c_thresh0_value => "0",
+      c_thresh0_value => "1",
       c_verbosity => 0,
       c_width => 16,
       c_xdevicefamily => "spartan3e"
