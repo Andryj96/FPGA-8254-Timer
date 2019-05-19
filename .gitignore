@@ -75,3 +75,5 @@ isim/
 Files/ipcore_dir/tmp/
 
 *.nlf
+
+Files/netgen/
