@@ -59,25 +59,15 @@ architecture Behavioral of Top_8254 is
 		);
 	END COMPONENT;
 	
-	COMPONENT CH_Selector
-	PORT(
-		CLK : IN std_logic;
-		RST : IN std_logic;
-		A : IN std_logic_vector(2 downto 0);
-		B : IN std_logic_vector(2 downto 0);
-		SEL : IN std_logic;          
-		Y : OUT std_logic_vector(7 downto 0)
-		);
-	END COMPONENT;
-	
 	COMPONENT CW_REGISTER
 	PORT(
 		D : IN std_logic_vector(2 downto 0);
-		EN : IN std_logic;
+		A : IN std_logic_vector(2 downto 0);
+		WR : IN std_logic;
 		CLK : IN std_logic;
 		RST : IN std_logic;          
 		WCTRL : OUT std_logic;
-		A : OUT std_logic_vector(2 downto 0)
+		Y : OUT std_logic_vector(6 downto 0)
 		);
 	END COMPONENT;
 	
@@ -97,14 +87,15 @@ architecture Behavioral of Top_8254 is
 		);
 	END COMPONENT;
 	
-	SIGNAL ADDRP,WADDR : std_logic_vector(2 downto 0);
+	SIGNAL ADDRP : std_logic_vector(2 downto 0);
 	SIGNAL WRITES, READS, WCW : std_logic;
-	SIGNAL CHANELS, DATAP: std_logic_vector(7 downto 0);
+	SIGNAL DATAP, DATAO: std_logic_vector(7 downto 0);
+	SIGNAL CHANNELS : std_logic_vector(6 downto 0);
 	
 begin
 
 	Inst_ADDR_DATA_REG: ADDR_DATA_REG PORT MAP(
-		CLK => WR,
+		CLK => CLK,
 		CS => CS,
 		RST => RST,
 		RD => RD,
@@ -126,22 +117,14 @@ begin
 		READS => READS
 	);
 	
-	Inst_CH_Selector: CH_Selector PORT MAP(
-		CLK => CLK,
-		RST => RST,
-		A => ADDRP,
-		B => WADDR,
-		SEL => WCW,
-		Y => CHANELS
-	);
-
 	Inst_CW_REGISTER: CW_REGISTER PORT MAP(
 		D => DATAP(4 downto 2),
-		EN => CHANELS(7),
+		A => ADDRP,
+		WR => WRITES,
 		CLK => CLK,
 		RST => RST,
 		WCTRL => WCW,
-		A => WADDR
+		Y => CHANNELS
 	);
 	
 	Inst_CHANNEL0: CHANNEL PORT MAP(
@@ -151,11 +134,11 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(0),
+		CS => CHANNELS(0),
 		GATE => GATE_CH(0),
 		CLKA => CLK_CH(0),
 		TOUT => OUT_CH(0),
-		DO => Do
+		DO => DATAO
 	);
 	
 	Inst_CHANNEL1: CHANNEL PORT MAP(
@@ -165,11 +148,11 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(1),
+		CS => CHANNELS(1),
 		GATE => GATE_CH(1),
 		CLKA => CLK_CH(1),
 		TOUT => OUT_CH(1),
-		DO => Do
+		DO => DATAO
 	);
 	
 	Inst_CHANNEL2: CHANNEL PORT MAP(
@@ -179,11 +162,11 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(2),
+		CS => CHANNELS(2),
 		GATE => GATE_CH(2),
 		CLKA => CLK_CH(2),
 		TOUT => OUT_CH(2),
-		DO => Do
+		DO => DATAO
 	);
 	
 	Inst_CHANNEL3: CHANNEL PORT MAP(
@@ -193,11 +176,11 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(3),
+		CS => CHANNELS(3),
 		GATE => GATE_CH(3),
 		CLKA => CLK_CH(3),
 		TOUT => OUT_CH(3),
-		DO => Do
+		DO => DATAO
 	);
 	
 	Inst_CHANNEL4: CHANNEL PORT MAP(
@@ -207,11 +190,11 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(4),
+		CS => CHANNELS(4),
 		GATE => GATE_CH(4),
 		CLKA => CLK_CH(4),
 		TOUT => OUT_CH(4),
-		DO => Do
+		DO => DATAO
 	);
 	
 	Inst_CHANNEL5: CHANNEL PORT MAP(
@@ -221,11 +204,11 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(5),
+		CS => CHANNELS(5),
 		GATE => GATE_CH(5),
 		CLKA => CLK_CH(5),
 		TOUT => OUT_CH(5),
-		DO => Do
+		DO => DATAO
 	);
 	
 	Inst_CHANNEL6: CHANNEL PORT MAP(
@@ -235,12 +218,20 @@ begin
 		WCTRL => WCW,
 		RST => RST,
 		CLK => CLK,
-		CS => CHANELS(6),
+		CS => CHANNELS(6),
 		GATE => GATE_CH(6),
 		CLKA => CLK_CH(6),
 		TOUT => OUT_CH(6),
-		DO => Do
+		DO => DATAO
 	);
 	
+	process(DATAO)
+	begin
+		if DATAO = "ZZZZZZZZ" then
+			Do <= (others => '1');
+		else
+			Do <= DATAO;
+		end if;
+	end process;
 end Behavioral;
 
