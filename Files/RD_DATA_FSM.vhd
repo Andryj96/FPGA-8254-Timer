@@ -30,9 +30,10 @@ end RD_DATA_FSM;
 
 architecture Behavioral of RD_DATA_FSM is
 
-type states is (ST0, ST1, ST2, ST3, ST4);
+type states is (start, reading, read0, read1, waiting);
 
 signal state, next_state : states;
+signal load, n_load, ouput, n_ouput : std_logic;
 
 begin
  
@@ -40,57 +41,61 @@ process(CLK,CE)
 	begin
 		if rising_edge(CLK) then
 			if RST = '0' then
-				state <= ST0;
+				state <= start;
+				load <= '1';
+				ouput <= '0';
 			elsif CE = '1' then
 				state <= next_state;
+				load <= n_load;
+				ouput <= n_ouput;
 			end if;
 		end if;
 	end process;
 	
-	NEXT_STATE_LOGIC: process(state, RD, RW)
+	NEXT_STATE_LOGIC: process(state, RD, RW, load, ouput)
 	begin
 		next_state <= state;
+		n_load <= load;
+		n_ouput <= ouput;
 		case(state) is
-			when ST0 => 
+			when start => 
 				if RW = '1' and RD = '1' then 
-						next_state <= ST1;
+					next_state <= reading;
+					n_load <= '0';
+				elsif RD = '0' then
+					n_load <= '1';
+					next_state <= read0;
 				end if;
-			when ST1 =>
-				next_state <= ST2;
-			when ST2 =>
+			when reading =>
 				if RD = '0' then
-					next_state <= ST3;
+					next_state <= read0;
+					n_ouput <= '0';
 				end if;
-			when ST3 =>
+			when read0 =>
+				if RD = '1' then
+					next_state <= waiting;
+				end if;
+			when waiting =>
 				if RD = '0' then
-					next_state <= ST4;
+					next_state <= read1;
+					n_ouput <= '1';
 				end if;
-			when ST4 =>
-					next_state <= ST0;
+			when read1 =>
+				if RD = '1' then
+					next_state <= start;
+				end if;
 			when others => 
 				next_state <= state;
 
 			end case;
 	end process;	
 	
-	OUPUT_LOGIC: process(state)
+	OUPUT_LOGIC: process(state, load, ouput)
 	begin
-		LD0 <= '0';
-		LD1 <= '0';
-		OE0 <= '1';  --HZ
-		OE1 <= '1';	 --HZ
-		case(state) is
-			when ST0 =>
-			when ST1 =>
-				LD0 <= '1';
-				LD1 <= '1';
-			when ST2 => 
-			when ST3 => 
-				OE0 <= '0';
-			when ST4 => 
-				OE1 <= '0';
-			when others =>
-			end case;
+		LD0 <= load;
+		LD1 <= load;
+		OE0 <= ouput;
+		OE1 <= not ouput;
 	end process;
 	
 end Behavioral;

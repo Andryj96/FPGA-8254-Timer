@@ -98,7 +98,7 @@ architecture Behavioral of CHANNEL is
 	END COMPONENT;
 	
 	signal mode, ready, rw, ld0, ld1, ld2, oe0, oe1, rd0, rd1 : std_logic;
-	signal in_lsb, in_msb, out_lsb, out_msb : std_logic_vector(7 downto 0);
+	signal in_lsb, in_msb, out_lsb, out_msb, data : std_logic_vector(7 downto 0);
 
 begin
 
@@ -164,7 +164,7 @@ begin
 		EN => rd0,
 		CS => oe0,
 		D => out_lsb,
-		Q => DO
+		Q => data
 	);
 	
 	Inst_MSB_OUT_WHZ: OUT_DATA_REG_WHZ PORT MAP(
@@ -173,8 +173,17 @@ begin
 		EN => rd1,
 		CS => oe1,
 		D => out_msb,
-		Q => DO
+		Q => data
 	);
+	
+	process(CS, data)
+	begin
+		if CS = '0' then 
+			DO <= data;
+		else
+			DO <= "ZZZZZZZZ";
+		end if;
+	end process;
 	
 end Behavioral;
 
