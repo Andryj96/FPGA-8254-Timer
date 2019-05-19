@@ -70,10 +70,10 @@ begin
 
 	process(RD, WR, CS)
 	begin
-		if WR = '0' and CS = '0' then
+		if WR = '0' and CS = '1' then
 			en_addr <= '1';
 			en_data <= '1';
-		elsif RD = '0' and CS = '0' then
+		elsif RD = '0' and CS = '1' then
 			en_addr <= '1';
 			en_data <= '0';
 		else

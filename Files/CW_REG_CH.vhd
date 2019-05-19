@@ -42,7 +42,7 @@ begin
 			if RST = '1' then
 				state <= ST0;
 				mode <= '0';
-			elsif CS = '0' then
+			elsif CS = '1' then
 				state <= next_state;
 				mode <= n_mode;
 			end if;

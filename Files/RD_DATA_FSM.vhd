@@ -42,7 +42,7 @@ process(CLK,CE)
 		if rising_edge(CLK) then
 			if RST = '1' then
 				state <= start;
-				load <= '1';
+				load <= '0';
 				ouput <= '0';
 			elsif CE = '1' then
 				state <= next_state;
@@ -61,12 +61,15 @@ process(CLK,CE)
 			when start => 
 				if RW = '1' and RD = '1' then 
 					next_state <= reading;
-					n_load <= '0';
+					n_ouput <= '0';
+					n_load <= '1';
 				elsif RD = '0' then
+					n_ouput <= '0';
 					n_load <= '1';
 					next_state <= read0;
 				end if;
 			when reading =>
+				n_load <= '0';
 				if RD = '0' then
 					next_state <= read0;
 					n_ouput <= '0';
@@ -81,11 +84,11 @@ process(CLK,CE)
 					n_ouput <= '1';
 				end if;
 			when read1 =>
+				n_load <= '0';
 				if RD = '1' then
 					next_state <= start;
 				end if;
 			when others => 
-				next_state <= state;
 
 			end case;
 	end process;	

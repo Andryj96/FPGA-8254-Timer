@@ -74,6 +74,7 @@ architecture Behavioral of Top_8254 is
 	COMPONENT CHANNEL
 	PORT(
 		D : IN std_logic_vector(7 downto 0);
+		A : IN std_logic_vector(2 downto 0);
 		RD : IN std_logic;
 		WR : IN std_logic;
 		WCTRL : IN std_logic;
@@ -88,7 +89,7 @@ architecture Behavioral of Top_8254 is
 	END COMPONENT;
 	
 	SIGNAL ADDRP : std_logic_vector(2 downto 0);
-	SIGNAL WRITES, READS, WCW : std_logic;
+	SIGNAL WRITES, READS, WCW, enable : std_logic;
 	SIGNAL DATAP, DATAO: std_logic_vector(7 downto 0);
 	SIGNAL CHANNELS : std_logic_vector(6 downto 0);
 	
@@ -96,7 +97,7 @@ begin
 
 	Inst_ADDR_DATA_REG: ADDR_DATA_REG PORT MAP(
 		CLK => CLK,
-		CS => CS,
+		CS => enable,
 		RST => RST,
 		RD => RD,
 		WR => WR,
@@ -110,7 +111,7 @@ begin
 	Inst_RW_CONTROL_SYNC: RW_CONTROL_SYNC PORT MAP(
 		RD => RD,
 		WR => WR,
-		CS => CS,
+		CS => enable,
 		CLK => CLK,
 		RST => RST,
 		WRITES => WRITES,
@@ -129,6 +130,7 @@ begin
 	
 	Inst_CHANNEL0: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -143,6 +145,7 @@ begin
 	
 	Inst_CHANNEL1: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,		
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -157,6 +160,7 @@ begin
 	
 	Inst_CHANNEL2: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,		
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -171,6 +175,7 @@ begin
 	
 	Inst_CHANNEL3: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,		
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -185,6 +190,7 @@ begin
 	
 	Inst_CHANNEL4: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,		
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -199,6 +205,7 @@ begin
 	
 	Inst_CHANNEL5: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,		
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -213,6 +220,7 @@ begin
 	
 	Inst_CHANNEL6: CHANNEL PORT MAP(
 		D => DATAP,
+		A => ADDRP,		
 		RD => READS,
 		WR => WRITES,
 		WCTRL => WCW,
@@ -224,6 +232,8 @@ begin
 		TOUT => OUT_CH(6),
 		DO => DATAO
 	);
+	
+	enable <= not CS;
 	
 	process(DATAO)
 	begin

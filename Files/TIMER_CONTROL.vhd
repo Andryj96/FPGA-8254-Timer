@@ -23,6 +23,7 @@ entity TIMER_CONTROL is
            RW : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            RST : in  STD_LOGIC;
+           A : in  STD_LOGIC_VECTOR(2 downto 0);
            LD0 : out  STD_LOGIC;
            LD1 : out  STD_LOGIC;
            LD2 : out  STD_LOGIC;
@@ -60,17 +61,17 @@ architecture Behavioral of TIMER_CONTROL is
 		);
 	END COMPONENT;
 	
-	signal en_RD : std_logic;
+	signal en_RD, en_LD, loaded : std_logic;
 begin
 
 	Inst_LD_DATA_FSM: LD_DATA_FSM PORT MAP(
 		CLK => CLK,
 		RST => RST,
 		WR => WR,
-		CE => CE,
+		CE => en_LD,
 		LD0 => LD0,
 		LD1 => LD1,
-		LD2 => en_RD
+		LD2 => loaded
 	);
 	
 	Inst_RD_DATA_FSM: RD_DATA_FSM PORT MAP(
@@ -85,7 +86,16 @@ begin
 		LD1 => RD1
 	);
 	
-	LD2 <= en_RD;
+	LD2 <= loaded;
 	
+	process(CE, A, loaded)
+	begin
+		en_RD <= loaded and CE;
+		if CE = '0' or A = "111" then
+			en_LD <= '0';
+		else
+			en_LD <= '1';
+		end if;
+	end process;
+ 	
 end Behavioral;
-

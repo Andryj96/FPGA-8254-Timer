@@ -44,7 +44,7 @@ begin
 		if rising_edge(CLK) then
 			if RST = '1' then
 				state <= ST0;
-			elsif CS = '0' then
+			elsif CS = '1' then
 				state <= next_state;
 			end if;
 		end if;

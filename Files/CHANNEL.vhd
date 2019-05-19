@@ -18,6 +18,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity CHANNEL is
     Port ( D : in  STD_LOGIC_VECTOR (7 downto 0);
+           A : in  STD_LOGIC_VECTOR (2 downto 0);
            RD : in  STD_LOGIC;
            WR : in  STD_LOGIC;
            WCTRL : in  STD_LOGIC;
@@ -47,6 +48,7 @@ architecture Behavioral of CHANNEL is
 	
 	COMPONENT TIMER_CONTROL
 	PORT(
+		A : in  STD_LOGIC_VECTOR (2 downto 0);	
 		CE : IN std_logic;
 		WR : IN std_logic;
 		RD : IN std_logic;
@@ -97,7 +99,7 @@ architecture Behavioral of CHANNEL is
 		);
 	END COMPONENT;
 	
-	signal mode, ready, rw, ld0, ld1, ld2, oe0, oe1, rd0, rd1 : std_logic;
+	signal mode, enable, ready, rw, ld0, ld1, ld2, oe0, oe1, rd0, rd1 : std_logic;
 	signal in_lsb, in_msb, out_lsb, out_msb, data : std_logic_vector(7 downto 0);
 
 begin
@@ -114,10 +116,11 @@ begin
 	);
 	
 	Inst_TIMER_CONTROL: TIMER_CONTROL PORT MAP(
+		A => A,
 		WR => WR,
 		RD => RD,
 		RW => rw,
-		CE => ready,
+		CE => enable,
 		CLK => CLK,
 		RST => RST,
 		LD0 => ld0,
@@ -129,6 +132,9 @@ begin
 		RD1 => rd1 
 	);	
 	
+	enable <= '1' when CS = '1' and ready = '1' else
+			 '0';
+
 	Inst_LSB_IN_REG: IN_DATA_REG PORT MAP(
 		D => D,
 		Q => in_lsb,
@@ -178,7 +184,7 @@ begin
 	
 	process(CS, data)
 	begin
-		if CS = '0' then 
+		if CS = '1' then 
 			DO <= data;
 		else
 			DO <= "ZZZZZZZZ";

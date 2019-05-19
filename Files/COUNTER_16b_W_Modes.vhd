@@ -121,21 +121,21 @@ begin
 				lod <= load1;
 				ce <= ce1;
 				TOUT <= out_1;
-				en_M1 <= '0';
-				en_M3 <= '1';
+				en_M1 <= '1';
+				en_M3 <= '0';
 			else
 				lod <= load3;
 				ce <= ce3;
 				TOUT <= out_3;
-				en_M1 <= '1';
-				en_M3 <= '0';
+				en_M1 <= '0';
+				en_M3 <= '1';
 			end if;
 		else
 				lod <= '0';
 				ce <= '0';
 				TOUT <= '0';
-				en_M1 <= '1';
-				en_M3 <= '1';
+				en_M1 <= '0';
+				en_M3 <= '0';
 		end if;
 	end process;
 	
