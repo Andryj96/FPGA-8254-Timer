@@ -23,7 +23,7 @@ entity CW_REGISTER is
            CLK : in  STD_LOGIC;
            RST : in  STD_LOGIC;
            WCTRL : out  STD_LOGIC;
-           Y : out  STD_LOGIC_VECTOR (7 downto 0));
+           Y : out  STD_LOGIC_VECTOR (6 downto 0));
 end CW_REGISTER;
 
 architecture Behavioral of CW_REGISTER is
@@ -36,7 +36,7 @@ begin
 	process(CLK)
 	begin
 		if rising_edge(CLK) then
-			if RST = '0' then
+			if RST = '1' then
 				data_c <= (others=>'0');
 				wctrl_c <= '0';
 			else
@@ -62,15 +62,14 @@ begin
 	process(data_c)
 	begin
 		case data_c is
-			when "000" => Y <= "11111110";
-			when "001" => Y <= "11111101";
-			when "010" => Y <= "11111011";
-			when "011" => Y <= "11110111";
-			when "100" => Y <= "11101111";
-			when "101" => Y <= "11011111";
-			when "110" => Y <= "10111111";
-			when "111" => Y <= "01111111";
-			when others => Y <= "11111110";
+			when "000" => Y <= "1111110";
+			when "001" => Y <= "1111101";
+			when "010" => Y <= "1111011";
+			when "011" => Y <= "1110111";
+			when "100" => Y <= "1101111";
+			when "101" => Y <= "1011111";
+			when "110" => Y <= "0111111";
+			when others => Y <= "1111110";
 		end case;
 	end process;
 	

@@ -33,7 +33,7 @@ begin
 	process(CLK)
 	begin
 		if rising_edge(CLK) then
-			if RST = '0' then
+			if RST = '1' then
 				curr_val <= (others => '0');
 			else
 				curr_val <= next_val;

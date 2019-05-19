@@ -40,7 +40,7 @@ begin
 process(CLK,CE)
 	begin
 		if rising_edge(CLK) then
-			if RST = '0' then
+			if RST = '1' then
 				state <= start;
 				load <= '1';
 				ouput <= '0';

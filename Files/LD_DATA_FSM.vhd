@@ -38,7 +38,7 @@ begin
 process(CLK,CE)
 	begin
 		if rising_edge(CLK) then
-			if RST = '0' then
+			if RST = '1' then
 				state <= ST0;
 				load <= '0';
 			elsif CE = '1' then
@@ -66,8 +66,10 @@ process(CLK,CE)
 					next_state <= ST3;
 				end if;
 			when ST3 =>
-				next_state <= ST0;
-				n_load <= '1';
+				if WR = '1' then
+					next_state <= ST0;
+					n_load <= '1';
+				end if;			
 			when others => 
 				next_state <= state;
 

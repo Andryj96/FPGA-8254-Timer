@@ -39,7 +39,7 @@ begin
 	process(CLK,CS)
 	begin
 		if rising_edge(CLK) then
-			if RST = '0' then
+			if RST = '1' then
 				state <= ST0;
 				mode <= '0';
 			elsif CS = '0' then
