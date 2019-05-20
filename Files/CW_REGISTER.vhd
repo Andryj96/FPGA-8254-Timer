@@ -20,6 +20,7 @@ entity CW_REGISTER is
     Port ( D : in  STD_LOGIC_VECTOR (2 downto 0);
            A : in  STD_LOGIC_VECTOR (2 downto 0);
            WR : in  STD_LOGIC;
+           RD : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            RST : in  STD_LOGIC;
            WCTRL : out  STD_LOGIC;
@@ -46,13 +47,13 @@ begin
 		end if;
 	end process;
 	
-	process(WR, data_c, D, A, wctrl_c)
+	process(WR, RD, data_c, D, A, wctrl_c)
 	begin			
 		wctrl_n <= '0';
 		if A = "111" and WR = '0' then
 			data_n <= D;
 			wctrl_n <= '1';
-		elsif WR = '0' then
+		elsif WR = '0' or RD = '0' then
 			data_n <= A;
 		else
 			data_n <= data_c;

@@ -105,7 +105,7 @@ BEGIN
 		Din <= "00000001";
 		
 		WR <= '0';
-      wait for CLK_period;
+      wait for CLK_period*2;
 		WR <= '1';
 		
       wait for CLK_period*5;
@@ -114,7 +114,7 @@ BEGIN
 		Din <= "00001111";
 		
 		WR <= '0';
-      wait for CLK_period;
+      wait for CLK_period*2;
 		WR <= '1';
 		
       wait for CLK_period*4;
@@ -123,7 +123,7 @@ BEGIN
 		Din <= "00000000";
 		
 		WR <= '0';
-      wait for CLK_period;
+      wait for CLK_period*2;
 		WR <= '1';
       wait for CLK_period*3;
 		
@@ -137,12 +137,19 @@ BEGIN
 		Din <= "00000010";
 		
 		WR <= '0';
-      wait for CLK_period;
+      wait for CLK_period*2;
 		WR <= '1';
       wait for CLK_period*3;
 
+		ADDR <= "011";
 		RD <= '0';
-      wait for CLK_period;
+      wait for CLK_period*2;
+		RD <= '1';
+      wait for CLK_period*6;
+
+		ADDR <= "000";
+		RD <= '0';
+      wait for CLK_period*2;
 		RD <= '1';
       wait for CLK_period*3;
 
