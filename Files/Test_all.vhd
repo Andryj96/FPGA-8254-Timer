@@ -57,7 +57,8 @@ ARCHITECTURE behavior OF test_all IS
 
    -- Clock period definitions
    constant CLK_period : time := 20 ns;
-   constant CLK_CH_period : time := 40 ns;
+   constant CLK_CH0_period : time := 40 ns;
+   constant CLK_CH1_period : time := 60 ns;
  
 BEGIN
  
@@ -85,12 +86,20 @@ BEGIN
 		wait for CLK_period/2;
    end process;
  
-   CLK_CH_process :process
+   CLK_CH0_process :process
    begin
 		CLK_CH(0) <= '0';
-		wait for CLK_CH_period/2;
+		wait for CLK_CH0_period/2;
 		CLK_CH(0) <= '1';
-		wait for CLK_CH_period/2;
+		wait for CLK_CH0_period/2;
+   end process;
+	
+    CLK_CH1_process :process
+   begin
+		CLK_CH(1) <= '0';
+		wait for CLK_CH1_period/2;
+		CLK_CH(1) <= '1';
+		wait for CLK_CH1_period/2;
    end process;
  
 
@@ -129,8 +138,40 @@ BEGIN
 		
 		GATE_CH(0) <= '1';
 		
-      wait for CLK_period*5;
+      wait for CLK_period*7;
 --		GATE_CH(0) <= '0';
+		
+		
+		ADDR <= "111";
+		Din <= "00000100";
+		
+		WR <= '0';
+      wait for CLK_period*2;
+		WR <= '1';
+		
+      wait for CLK_period*5;
+
+		ADDR <= "001";
+		Din <= "00000111";
+		
+		WR <= '0';
+      wait for CLK_period*2;
+		WR <= '1';
+		
+      wait for CLK_period*4;
+		
+		ADDR <= "001";
+		Din <= "00000000";
+		
+		WR <= '0';
+      wait for CLK_period*2;
+		WR <= '1';
+      wait for CLK_period*3;
+		
+		GATE_CH(1) <= '1';
+		
+      wait for CLK_period*2;
+		GATE_CH(1) <= '0';
 		
 --		Latch Command		
 		ADDR <= "111";
