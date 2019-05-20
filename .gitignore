@@ -73,3 +73,7 @@ isim/
 *.pdsbak
 *.workspace
 Files/ipcore_dir/tmp/
+
+*.nlf
+
+Files/netgen/

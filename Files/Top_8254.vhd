@@ -63,6 +63,7 @@ architecture Behavioral of Top_8254 is
 	PORT(
 		D : IN std_logic_vector(2 downto 0);
 		A : IN std_logic_vector(2 downto 0);
+		RD : IN std_logic;
 		WR : IN std_logic;
 		CLK : IN std_logic;
 		RST : IN std_logic;          
@@ -121,7 +122,8 @@ begin
 	Inst_CW_REGISTER: CW_REGISTER PORT MAP(
 		D => DATAP(4 downto 2),
 		A => ADDRP,
-		WR => WRITES,
+		WR => WR,
+		RD => RD,
 		CLK => CLK,
 		RST => RST,
 		WCTRL => WCW,
