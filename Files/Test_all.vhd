@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 -- MIT License
 --	Copyright (c) 2019
--- Engineers: Andry J. Hernandez Rodriguez
+-- Engineers: Andry J. Hernandez Rodriguez & Dariel Suarez Gonzalez
 -- 
 -- Create Date:    17:58:33 05/05/2019 
 -- Design Name: 	 8254_Timer
@@ -58,7 +58,7 @@ ARCHITECTURE behavior OF test_all IS
    -- Clock period definitions
    constant CLK_period : time := 20 ns;
    constant CLK_CH0_period : time := 40 ns;
-   constant CLK_CH1_period : time := 40 ns;
+   constant CLK_CH1_period : time := 80 ns;
  
 BEGIN
  

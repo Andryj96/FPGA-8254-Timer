@@ -1,0 +1,15 @@
+NET "clk" LOC = "C9" |IOSTANDARD = LVCMOS33 ;
+
+NET "rst" LOC = "K17" |IOSTANDARD = LVTTL |PULLDOWN ;
+NET "start0_btn" LOC = "D18" |IOSTANDARD = LVTTL |PULLDOWN ;
+NET "start1_btn" LOC = "V4" | IOSTANDARD = LVTTL | PULLDOWN ;
+NET "gate0_btn" LOC = "N17" |IOSTANDARD = LVTTL |PULLUP ;
+NET "gate1_btn" LOC = "H18" | IOSTANDARD = LVTTL | PULLUP ;
+NET "selector_btn" LOC = "L14" | IOSTANDARD = LVTTL | PULLUP ;
+
+NET "sout0" LOC = "A8" |IOSTANDARD = LVTTL |SLEW = SLOW |DRIVE = 8 ;
+NET "sout1" LOC = "G9" | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
+#Created by Constraints Editor (xc3s1600e-fg320-5) - 2019/05/21
+NET "clk" TNM_NET = clk;
+#Created by Constraints Editor (xc3s1600e-fg320-5) - 2019/05/21
+TIMESPEC TS_clk = PERIOD "clk" 20 ns HIGH 50%;
