@@ -1,0 +1,33 @@
+Release 14.7 ngcbuild P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Command Line: ngcbuild.exe -dd
+C:/Users/Andry/Desktop/FPGA/FPGA_8254_Timer/Files/_ngo -sd ipcore_dir -p
+xc3s1600e-fg320-5 -i
+C:\Users\Andry\Desktop\FPGA\FPGA_8254_Timer\Files\Testing_CH.ngc
+C:\Users\Andry\Desktop\FPGA\FPGA_8254_Timer\Files\Testing_CH_cs.ngc
+
+Reading NGO file
+"C:/Users/Andry/Desktop/FPGA/FPGA_8254_Timer/Files/Testing_CH.ngc" ...
+Loading design module "ipcore_dir/CUNTER_DOWN_B_16.ngc"...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGCBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 178552 kilobytes
+
+Writing NGC file
+"C:/Users/Andry/Desktop/FPGA/FPGA_8254_Timer/Files/Testing_CH_cs.ngc" ...
+Total REAL time to NGCBUILD completion:  28 sec
+Total CPU time to NGCBUILD completion:   27 sec
+
+Writing NGCBUILD log file
+"C:/Users/Andry/Desktop/FPGA/FPGA_8254_Timer/Files/Testing_CH_cs.blc"...

@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 -- MIT License
 --	Copyright (c) 2019
--- Engineers: Andry J. Hernandez Rodriguez
+-- Engineers: Andry J. Hernandez Rodriguez & Dariel Suarez Gonzalez
 -- 
 -- Create Date:    23:27:11 05/13/2019 
 -- Design Name: 	 8254_Timer

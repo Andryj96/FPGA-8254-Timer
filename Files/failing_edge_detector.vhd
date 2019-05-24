@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 -- MIT License
 --	Copyright (c) 2019
--- Engineers: Andry J. Hernandez Rodriguez
+-- Engineers: Andry J. Hernandez Rodriguez & Dariel Suarez Gonzalez
 -- 
 -- Create Date:    23:51:33 06/05/2019 
 -- Design Name: 	 8254_Timer
@@ -26,7 +26,7 @@ end falling_edge_detector;
 
 architecture Behavioral of falling_edge_detector is
 	
-	type stetes is (ST0, ST1, ST2, ST3);
+	type stetes is (ST0, ST1, ST2, ST3, ST4);
 	
 	signal state, next_state : stetes;
 	
@@ -56,7 +56,11 @@ begin
 			when ST2 =>
 						next_state <= ST3;
 			when ST3 =>
+						next_state <= ST4;
+			when ST4 =>
+				if start = '1' then
 						next_state <= ST0;
+				end if;
 
 			when others => 
 				next_state <= state;
@@ -73,6 +77,7 @@ begin
 				pulse <= '0';
 			when ST3 =>
 				pulse <= '0';
+			when ST4 =>
 			when others =>
 				pulse <= '1';
 			end case;
